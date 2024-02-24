@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 TARGET = philo
-SRCS = src/main.c 
+SRCS = src/main.c src/initialize.c src/routine.c 
 OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
