@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:42:01 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:04:00 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:22:00 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_values(int ac, char **av)
 void	free_func(t_philos *philos, t_philo *philo)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < philos->nop)
 		pthread_mutex_destroy(&philos->eating[i++]);
@@ -49,6 +49,7 @@ void	free_func(t_philos *philos, t_philo *philo)
 long	get_time(void)
 {
 	struct timeval	time;
+
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * (long)1000) + (time.tv_usec / 1000));
 }
@@ -80,23 +81,20 @@ int	ft_atoi(const char *nb)
 
 void	msleep(int ms)
 {
-	struct timespec req, rem;
+	struct timespec	req;
+	struct timespec	rem;
 
-	if(ms > 999)
-	{   
-		/* Must be Non-Negative */
+	if (ms > 999)
+	{
 		req.tv_sec = (int)(ms / 1000);
 		req.tv_nsec = (ms - ((long)req.tv_sec * 1000)) * 1000000;
-	}   
+	}
 	else
-	{   
-		/* Must be Non-Negative */
+	{
 		req.tv_sec = 0;
-		/* 1000 nano seconds = 1 micro second */
 		req.tv_nsec = ms * 1000000;
-	}   
-
-	while(nanosleep(&req, &rem))
+	}
+	while (nanosleep(&req, &rem))
 	{
 		req = rem;
 	}

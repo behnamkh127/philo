@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:55:49 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 18:58:51 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:18:07 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*s_routine(void *arg)
 {
-	t_philos		*source;
+	t_philos	*source;
 	int			i;
 	int			feed_flag;
 

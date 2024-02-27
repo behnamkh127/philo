@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:03:47 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:26:12 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 #include <sys/time.h>
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
+#define Y   "\x1B[33m"
 #define BLU   "\x1B[34m"
 #define CYN   "\x1B[36m"
 #define MAG   "\x1B[35m"
 #define RESET "\x1B[0m"
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_philos
 {
@@ -35,17 +35,17 @@ typedef struct s_philos
 	int				death;
 	long			st;
 	pthread_t		*th;
-	pthread_mutex_t *eating;
+	pthread_mutex_t	*eating;
 	pthread_mutex_t	detex;
 	t_philo			*ptr_to_philo;
 }	t_philos;
 
 typedef struct s_philo
 {
-	int		id;
-	int		nottpa;
-	long	lttpa;
-	int		died;
+	int			id;
+	int			nottpa;
+	long		lttpa;
+	int			died;
 	t_philos	*philos;
 }	t_philo;
 

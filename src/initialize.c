@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:17:58 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:09:39 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:22:46 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	init_mutex(t_philos *philos)
 t_philo	*init_philos(t_philos *philos)
 {
 	t_philo	*philo;
-	int			i;
+	int		i;
 
 	i = 0;
 	philo = (t_philo *)malloc(sizeof(t_philo) * philos->nop);
@@ -98,7 +98,7 @@ void	threads_create(t_philos *philos, t_philo *philo)
 
 int	one_philo(t_philos *philos)
 {
-	printf(YEL"%ld %d has taken a fork" RESET "\n",
+	printf(Y"%ld %d has taken a fork" RESET "\n",
 		get_time() - philos->st, 1);
 	printf(GRN"%ld %d is thinking" RESET "\n", get_time() - philos->st, 1);
 	msleep(philos->ttd * 1000);

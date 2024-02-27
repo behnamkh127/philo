@@ -6,11 +6,11 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:44:56 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 18:51:54 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:13:14 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"../inc/philo.h"
+#include "../inc/philo.h"
 
 int	main(int ac, char **av)
 {
