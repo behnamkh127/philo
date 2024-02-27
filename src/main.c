@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:44:56 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/26 17:26:14 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:01:54 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,40 @@
 
 int	main(int ac, char **av)
 {
-	if (ac < 5)
+	t_philo			*philo;
+	t_philos		*philos;
+
+	if (ac < 5 || ac > 6)
 	{
-		printf("Number of arguments less than required\n");
+		printf("Wrong Number of arguments\n");
 		return (1);
 	}
-	if (ac > 6)
-	{
-		printf("Number of arguments more than need\n");
+	philo = initialize(av);
+	if (!philo)
 		return (1);
-	}
-	else
-		initialize(ac, av);
+	init_mutex(philo);
+	philos = init_philos(philo);
+	threads_create(philo, philos);
+	free_func(philo, philos);
 	return (0);
 }
 
+#include <stdio.h> // Add include statement for printf
+#include <stdlib.h> // Add include statement for free
 
-
-void	even_condition(t_philos *philos, t_philo *philo)
+void	free_func(t_philo *philo, t_philos *philos)
 {
-	int			i;
-	pthread_t	th[philo->nop + 1];
-
+	int	i;
+	
 	i = 0;
 	while (i < philo->nop)
-	{
-		if (pthread_create(&th[i], NULL, &routine, &philos[i]))
-			exit (2);
-		usleep(10);
-		i++;
-	}
-	if (pthread_create(&th[i], NULL, &s_routine, philo))
-		exit (2);
-	i = 0;
-	while (i < philo->nop)
-	{
-		if (pthread_join(th[i], NULL))
-			exit (2);
-		i++;
-	}
-	if (pthread_join(th[i], NULL))
-		exit (2);
+		pthread_mutex_destroy(&philo->eating[i++]);
+	pthread_mutex_destroy(&philo->detex);
+	free(philo->th);
+	free(philos);
+	free(philo->eating);
+	free(philo);
 }
-
-
 
 long	get_time(void)
 {

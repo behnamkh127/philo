@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/26 17:23:25 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:56:16 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ typedef struct s_philos t_philos;
 
 typedef struct s_philo
 {
-	int		nop;
-	long	ttd;
-	long	tte;
-	long	tts;
-	int		notepme;
-	int		death;
-	long	st;
+	int				nop;
+	long			ttd;
+	long			tte;
+	long			tts;
+	int				notepme;
+	int				death;
+	long			st;
+	pthread_t		*th;
 	pthread_mutex_t *eating;
 	pthread_mutex_t	detex;
-	t_philos	*ptr_to_philos;
+	t_philos		*ptr_to_philos;
 }	t_philo;
 
 typedef struct s_philos
@@ -55,9 +56,9 @@ typedef struct s_philos
 // }	t_supervisor;
 
 
-void	initialize(int ac, char **av);
-void	even_condition(t_philos *philos, t_philo *philo);
-void	threads_create(t_philo *philo);
+t_philo	*initialize(char **av);
+void	threads_create(t_philo *philo, t_philos *philos);
+t_philos	*init_philos(t_philo *philo);
 void	*routine(void *arg);
 long	get_time(void);
 void	*s_routine(void *arg);
@@ -65,3 +66,6 @@ int		check_if_death_happen(t_philos *temp, t_philo *aux, int j);
 int		eating(t_philos *temp, t_philo *aux, int first_fork, int second_fork);
 int		sleeping_thinking(t_philos *temp, t_philo *aux);
 int		ft_atoi(const char *nb);
+void	init_mutex(t_philo *philo);
+int		check_values(t_philo *philo);
+void	free_func(t_philo *philo, t_philos *philos);
