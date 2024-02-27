@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 13:56:16 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:03:47 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 #define MAG   "\x1B[35m"
 #define RESET "\x1B[0m"
 
-typedef struct s_philos t_philos;
+typedef struct s_philo t_philo;
 
-typedef struct s_philo
+typedef struct s_philos
 {
 	int				nop;
 	long			ttd;
@@ -37,35 +37,42 @@ typedef struct s_philo
 	pthread_t		*th;
 	pthread_mutex_t *eating;
 	pthread_mutex_t	detex;
-	t_philos		*ptr_to_philos;
-}	t_philo;
+	t_philo			*ptr_to_philo;
+}	t_philos;
 
-typedef struct s_philos
+typedef struct s_philo
 {
 	int		id;
 	int		nottpa;
 	long	lttpa;
 	int		died;
-	t_philo	*philo;
-}	t_philos;
+	t_philos	*philos;
+}	t_philo;
 
-// typedef struct s_supervisor
-// {
-// 	t_philos	**source;
-// 	// t_philo		*main;
-// }	t_supervisor;
+//death
+int			check_if_death_happen(t_philo *temp, t_philos *aux, int j);
 
+//supervisor routine
+void		*s_routine(void *arg);
+int			change_feed_flag(t_philos *source, int i, int *flag);
+int			change_death_flags(t_philos *source, int i);
 
-t_philo	*initialize(char **av);
-void	threads_create(t_philo *philo, t_philos *philos);
-t_philos	*init_philos(t_philo *philo);
-void	*routine(void *arg);
-long	get_time(void);
-void	*s_routine(void *arg);
-int		check_if_death_happen(t_philos *temp, t_philo *aux, int j);
-int		eating(t_philos *temp, t_philo *aux, int first_fork, int second_fork);
-int		sleeping_thinking(t_philos *temp, t_philo *aux);
-int		ft_atoi(const char *nb);
-void	init_mutex(t_philo *philo);
-int		check_values(t_philo *philo);
-void	free_func(t_philo *philo, t_philos *philos);
+//utilities
+int			check_values(int ac, char **av);
+void		free_func(t_philos *philos, t_philo *philo);
+int			ft_atoi(const char *nb);
+long		get_time(void);
+void		msleep(int ms);
+
+//initialize
+t_philos	*initialize(char **av);
+void		init_mutex(t_philos *philos);
+t_philo		*init_philos(t_philos *philos);
+void		threads_create(t_philos *philos, t_philo *philo);
+int			one_philo(t_philos *philos);
+
+//routine
+void		*routine(void *arg);
+int			fork_taking(t_philo *temp, t_philos *aux, int first_fork, int second_fork);
+int			eating(t_philo *temp, t_philos *aux, int first_fork, int second_fork);
+int			sleeping_thinking(t_philo *temp, t_philos *aux);

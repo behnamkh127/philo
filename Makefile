@@ -1,12 +1,12 @@
 CC		= cc
 
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=thread -g -O1
-LDFLAGS = -fsanitize=thread
+CFLAGS	= -Wall -Wextra -Werror #-fsanitize=thread -g -O1
+# LDFLAGS = -fsanitize=thread
 HEADER	= ./inc/
 
 NAME	= philo
 
-SRCS	= src/main.c src/initialize.c src/routine.c src/death.c
+SRCS	= src/main.c src/initialize.c src/routine.c src/death.c src/s_routine.c src/utils.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -18,7 +18,8 @@ RESET	=	\e[0m
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	@$(CC) $(LDFLAGS) $(OBJS) -o $(NAME) 
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@rm -f $(OBJS)
 	@printf "$(GREEN)Executable created$(RESET)\n"
 
 %.o: %.c
