@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 12:16:08 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:28:07 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,4 @@ void		*routine(void *arg);
 int			fork_taking(t_philo *temp, int first_fork, int second_fork);
 int			eating(t_philo *temp, int first_fork, int second_fork);
 int			sleeping_thinking(t_philo *temp, t_philos *aux);
+long	ft_usleep(int m_sec);

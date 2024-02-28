@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:17:58 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 11:58:18 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:07:30 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	threads_create(t_philos *philos, t_philo *philo)
 	{
 		if (pthread_create(&philos->th[i], NULL, &routine, &philo[i]))
 			return (1);
-		msleep(1);
+		ft_usleep(1);
 		i++;
 	}
 	if (pthread_create(&philos->th[i], NULL, &s_routine, philos))
@@ -111,7 +111,7 @@ int	one_philo(t_philos *philos)
 	printf(Y"%ld %d has taken a fork" RESET "\n",
 		get_time() - philos->st, 1);
 	printf(GRN"%ld %d is thinking" RESET "\n", get_time() - philos->st, 1);
-	msleep(philos->ttd);
+	ft_usleep(philos->ttd);
 	printf(RED"%ld %d died" RESET "\n", get_time() - philos->st, 1);
 	free (philos);
 	return (1);

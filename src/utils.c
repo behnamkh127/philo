@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:42:01 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 11:21:27 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:35:13 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,17 @@ int	ft_atoi(const char *nb)
 	return (result * sign);
 }
 
-void	msleep(int ms)
+long	ft_usleep(int m_sec)
 {
-	struct timespec	req;
-	struct timespec	rem;
+	int	before;
+	int	after;
 
-	if (ms > 999)
+	before = get_time();
+	after = before;
+	while (after - before < m_sec)
 	{
-		req.tv_sec = (int)(ms / 1000);
-		req.tv_nsec = (ms - ((long)req.tv_sec * 1000)) * 1000000;
+		usleep(100);
+		after = get_time();
 	}
-	else
-	{
-		req.tv_sec = 0;
-		req.tv_nsec = ms * 1000000;
-	}
-	while (nanosleep(&req, &rem))
-	{
-		req = rem;
-	}
+	return (0);
 }

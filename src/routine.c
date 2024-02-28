@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:16:08 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 13:43:39 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:07:41 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	eating(t_philo *temp, int first_fork, int second_fork)
 	temp->nottpa += 1;
 	temp->lttpa = get_time();
 	pthread_mutex_unlock(&(temp->philos->detex));
-	msleep(temp->philos->tte);
+	ft_usleep(temp->philos->tte);
 	return (0);
 }
 
@@ -93,7 +93,7 @@ int	sleeping_thinking(t_philo *temp, t_philos *aux)
 	if (check_if_death_happen(temp, temp->id))
 		return (1);
 	printf(MAG"%ld %d is sleeping" RESET "\n", get_time() - aux->st, temp->id);
-	msleep(aux->tts);
+	ft_usleep(aux->tts);
 	if (check_if_death_happen(temp, temp->id))
 		return (1);
 	printf(GRN"%ld %d is thinking" RESET "\n", get_time() - aux->st, temp->id);
