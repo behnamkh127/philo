@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:26:12 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:16:08 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philos
 	int				death;
 	long			st;
 	pthread_t		*th;
-	pthread_mutex_t	*eating;
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	detex;
 	t_philo			*ptr_to_philo;
 }	t_philos;
@@ -50,7 +50,7 @@ typedef struct s_philo
 }	t_philo;
 
 //death
-int			check_if_death_happen(t_philo *temp, t_philos *aux, int j);
+int			check_if_death_happen(t_philo *temp, int j);
 
 //supervisor routine
 void		*s_routine(void *arg);
@@ -66,13 +66,13 @@ void		msleep(int ms);
 
 //initialize
 t_philos	*initialize(char **av);
-void		init_mutex(t_philos *philos);
+int			init_mutex(t_philos *philos);
 t_philo		*init_philos(t_philos *philos);
-void		threads_create(t_philos *philos, t_philo *philo);
+int			threads_create(t_philos *philos, t_philo *philo);
 int			one_philo(t_philos *philos);
 
 //routine
 void		*routine(void *arg);
-int			fork_taking(t_philo *temp, t_philos *aux, int first_fork, int second_fork);
-int			eating(t_philo *temp, t_philos *aux, int first_fork, int second_fork);
+int			fork_taking(t_philo *temp, int first_fork, int second_fork);
+int			eating(t_philo *temp, int first_fork, int second_fork);
 int			sleeping_thinking(t_philo *temp, t_philos *aux);

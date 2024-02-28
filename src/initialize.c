@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:17:58 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:22:46 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:58:18 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_philos	*initialize(char **av)
 
 	philos = (t_philos *)malloc(sizeof(t_philos));
 	if (!philos)
-		exit (1);
+		return (NULL);
 	philos->nop = ft_atoi(av[1]);
 	philos->ttd = (long)ft_atoi(av[2]);
 	philos->tte = (long)ft_atoi(av[3]);
@@ -32,20 +32,24 @@ t_philos	*initialize(char **av)
 	return (philos);
 }
 
-void	init_mutex(t_philos *philos)
+int	init_mutex(t_philos *philos)
 {
 	int	i;
 
 	i = 0;
-	philos->eating = malloc(sizeof(pthread_mutex_t) * philos->nop);
-	if (!philos->eating)
-		exit (1);
+	philos->fork = malloc(sizeof(pthread_mutex_t) * philos->nop);
+	if (!philos->fork)
+	{
+		free (philos);
+		return (1);
+	}
 	while (i < philos->nop)
 	{
-		pthread_mutex_init(&philos->eating[i], NULL);
+		pthread_mutex_init(&philos->fork[i], NULL);
 		i++;
 	}
 	pthread_mutex_init(&philos->detex, NULL);
+	return (0);
 }
 
 t_philo	*init_philos(t_philos *philos)
@@ -55,6 +59,11 @@ t_philo	*init_philos(t_philos *philos)
 
 	i = 0;
 	philo = (t_philo *)malloc(sizeof(t_philo) * philos->nop);
+	if (!philo)
+	{
+		free_func(philos, NULL);
+		return (NULL);
+	}
 	while (i < philos->nop)
 	{
 		philo[i].philos = philos;
@@ -68,32 +77,33 @@ t_philo	*init_philos(t_philos *philos)
 	return (philo);
 }
 
-void	threads_create(t_philos *philos, t_philo *philo)
+int	threads_create(t_philos *philos, t_philo *philo)
 {
 	int			i;
 
 	i = 0;
-	philos->th = (pthread_t *)malloc(sizeof(pthread_t) * philos->nop + 1);
+	philos->th = (pthread_t *)malloc(sizeof(pthread_t) * (philos->nop + 1));
 	if (!philos->th)
-		return ;
+		return (1);
 	while (i < philos->nop)
 	{
 		if (pthread_create(&philos->th[i], NULL, &routine, &philo[i]))
-			return ;
+			return (1);
 		msleep(1);
 		i++;
 	}
 	if (pthread_create(&philos->th[i], NULL, &s_routine, philos))
-		return ;
+		return (1);
 	i = 0;
 	while (i < philos->nop)
 	{
 		if (pthread_join(philos->th[i], NULL))
-			return ;
+			return (1);
 		i++;
 	}
 	if (pthread_join(philos->th[i], NULL))
-		return ;
+		return (1);
+	return (0);
 }
 
 int	one_philo(t_philos *philos)
@@ -101,7 +111,7 @@ int	one_philo(t_philos *philos)
 	printf(Y"%ld %d has taken a fork" RESET "\n",
 		get_time() - philos->st, 1);
 	printf(GRN"%ld %d is thinking" RESET "\n", get_time() - philos->st, 1);
-	msleep(philos->ttd * 1000);
+	msleep(philos->ttd);
 	printf(RED"%ld %d died" RESET "\n", get_time() - philos->st, 1);
 	free (philos);
 	return (1);

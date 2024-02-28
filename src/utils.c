@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:42:01 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/27 19:22:00 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:21:27 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	free_func(t_philos *philos, t_philo *philo)
 
 	i = 0;
 	while (i < philos->nop)
-		pthread_mutex_destroy(&philos->eating[i++]);
+		pthread_mutex_destroy(&philos->fork[i++]);
 	pthread_mutex_destroy(&philos->detex);
 	free(philos->th);
 	free(philo);
-	free(philos->eating);
+	free(philos->fork);
 	free(philos);
 }
 

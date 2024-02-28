@@ -1,6 +1,6 @@
 CC		= cc
 
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=thread -g -O1
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=thread -g -O1
 # LDFLAGS = -fsanitize=thread
 HEADER	= ./inc/
 
