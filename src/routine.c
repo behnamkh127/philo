@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:16:08 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 18:07:41 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:44:00 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,14 @@
 void	*routine(void *arg)
 {
 	t_philo	*temp;
-	int		first_fork;
-	int		second_fork;
 
 	temp = (t_philo *)arg;
-	if (temp->id == 1)
-	{
-		first_fork = temp->id;
-		second_fork = temp->id - 1;
-	}
-	else
-	{
-		first_fork = temp->id - 1;
-		second_fork = temp->id % temp->philos->nop;
-	}
+	select_fork(temp);
 	while (1)
 	{
 		if (check_if_death_happen(temp, temp->id))
 			break ;
-		if (fork_taking(temp, first_fork, second_fork))
+		if (fork_taking(temp))
 			break ;
 		if (sleeping_thinking(temp, temp->philos))
 			break ;
@@ -41,7 +30,21 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int	fork_taking(t_philo *temp, int first_fork, int second_fork)
+void	select_fork(t_philo *temp)
+{
+	if (temp->id == 1)
+	{
+		temp->first_fork = temp->id;
+		temp->second_fork = temp->id - 1;
+	}
+	else
+	{
+		temp->first_fork = temp->id - 1;
+		temp->second_fork = temp->id % temp->philos->nop;
+	}
+}
+
+int	fork_taking(t_philo *temp)
 {
 	if (check_if_death_happen(temp, temp->id))
 		return (1);
@@ -52,28 +55,28 @@ int	fork_taking(t_philo *temp, int first_fork, int second_fork)
 		return (1);
 	}
 	pthread_mutex_unlock(&(temp->philos->detex));
-	pthread_mutex_lock(&temp->philos->fork[first_fork]);
+	pthread_mutex_lock(&temp->philos->fork[temp->first_fork]);
 	printf(Y"%ld %d has taken a fork"RESET"\n",
 		get_time() - temp->philos->st, temp->id);
 	if (check_if_death_happen(temp, temp->id))
 	{
-		pthread_mutex_unlock(&temp->philos->fork[first_fork]);
+		pthread_mutex_unlock(&temp->philos->fork[temp->first_fork]);
 		return (1);
 	}
-	pthread_mutex_lock(&temp->philos->fork[second_fork]);
-	if (eating(temp, first_fork, second_fork))
+	pthread_mutex_lock(&temp->philos->fork[temp->second_fork]);
+	if (eating(temp))
 		return (1);
-	pthread_mutex_unlock(&temp->philos->fork[second_fork]);
-	pthread_mutex_unlock(&temp->philos->fork[first_fork]);
+	pthread_mutex_unlock(&temp->philos->fork[temp->second_fork]);
+	pthread_mutex_unlock(&temp->philos->fork[temp->first_fork]);
 	return (0);
 }
 
-int	eating(t_philo *temp, int first_fork, int second_fork)
+int	eating(t_philo *temp)
 {
 	if (check_if_death_happen(temp, temp->id))
 	{
-		pthread_mutex_unlock(&temp->philos->fork[second_fork]);
-		pthread_mutex_unlock(&temp->philos->fork[first_fork]);
+		pthread_mutex_unlock(&temp->philos->fork[temp->second_fork]);
+		pthread_mutex_unlock(&temp->philos->fork[temp->first_fork]);
 		return (1);
 	}
 	printf(Y"%ld %d has taken a fork"RESET"\n",

@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:17:58 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 18:07:30 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:27:08 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	threads_create(t_philos *philos, t_philo *philo)
 	{
 		if (pthread_create(&philos->th[i], NULL, &routine, &philo[i]))
 			return (1);
-		ft_usleep(1);
+		ft_usleep(500);
 		i++;
 	}
 	if (pthread_create(&philos->th[i], NULL, &s_routine, philos))

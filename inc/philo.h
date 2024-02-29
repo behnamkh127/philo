@@ -6,7 +6,7 @@
 /*   By: bekhodad <bekhodad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:10:17 by bekhodad          #+#    #+#             */
-/*   Updated: 2024/02/28 18:28:07 by bekhodad         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:47:05 by bekhodad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_philo
 	int			nottpa;
 	long		lttpa;
 	int			died;
+	int			first_fork;
+	int			second_fork;
 	t_philos	*philos;
 }	t_philo;
 
@@ -62,7 +64,7 @@ int			check_values(int ac, char **av);
 void		free_func(t_philos *philos, t_philo *philo);
 int			ft_atoi(const char *nb);
 long		get_time(void);
-void		msleep(int ms);
+long		ft_usleep(int m_sec);
 
 //initialize
 t_philos	*initialize(char **av);
@@ -73,7 +75,7 @@ int			one_philo(t_philos *philos);
 
 //routine
 void		*routine(void *arg);
-int			fork_taking(t_philo *temp, int first_fork, int second_fork);
-int			eating(t_philo *temp, int first_fork, int second_fork);
+void		select_fork(t_philo *temp);
+int			fork_taking(t_philo *temp);
+int			eating(t_philo *temp);
 int			sleeping_thinking(t_philo *temp, t_philos *aux);
-long	ft_usleep(int m_sec);
