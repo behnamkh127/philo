@@ -19,7 +19,6 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@rm -f $(OBJS)
 	@printf "$(GREEN)Executable created$(RESET)\n"
 
 %.o: %.c
